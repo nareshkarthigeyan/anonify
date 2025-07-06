@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { supabase } from "../../../lib/supabaseClient";
 import Post from "./Post";
 
-const Feed = () => {
+const Feed = ({ refreshTrigger }) => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -52,13 +52,13 @@ const Feed = () => {
     };
 
     fetchPosts();
-  }, []);
+  }, [refreshTrigger]);
 
   if (loading) return <div className="text-center p-4 text-rose-500"></div>;
 
   return (
     <div className="w-full flex justify-center">
-      <div className="w-full max-w-xl pb-1 space-y-2">
+      <div className="w-full max-w-xl p-2 space-y-2">
         {/* Map posts here */}
         {posts.map((post) => (
           <Post

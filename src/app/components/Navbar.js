@@ -8,7 +8,7 @@ import { supabase } from "../../../lib/supabaseClient";
 import { Chicle } from "next/font/google";
 const chicle = Chicle({ subsets: ["latin"], weight: "400" });
 
-const Navbar = () => {
+const Navbar = ({ onPostSubmit }) => {
   const [showForm, setShowForm] = useState(false);
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
@@ -38,6 +38,7 @@ const Navbar = () => {
     }
 
     setLoading(false);
+    onPostSubmit();
     handleClose();
   };
 

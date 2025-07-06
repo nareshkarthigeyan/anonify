@@ -1,13 +1,15 @@
-import Image from "next/image";
-import Post from "./components/Post";
+"use client";
 import Feed from "./components/Feed";
+import Navbar from "./components/Navbar";
+import { useState } from "react";
 
-export default function Home() {
-  
+export default function HomePage() {
+  const [refreshKey, setRefreshKey] = useState(0);
+
   return (
-    <div className="p-2">
-      {/* <Post content={"This is my first post"} likeCount={4} /> */}
-      <Feed />
-    </div>
+    <>
+      <Navbar onPostSubmit={() => setRefreshKey((prev) => prev + 1)} />
+      <Feed refreshTrigger={refreshKey} />
+    </>
   );
 }
