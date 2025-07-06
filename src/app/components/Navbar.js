@@ -1,11 +1,11 @@
 "use client";
 import React from "react";
-import { Chicle } from "next/font/google";
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import { supabase } from "../../../lib/supabaseClient";
 
+import { Chicle } from "next/font/google";
 const chicle = Chicle({ subsets: ["latin"], weight: "400" });
 
 const Navbar = () => {

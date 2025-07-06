@@ -1,13 +1,35 @@
 "use client";
-import React from "react";
-import Image from "next/image";
-import { FiHeart } from "react-icons/fi"; // outline heart
-import { BsHeartFill } from "react-icons/bs"; // filled heart
-import { useState } from "react";
+import React, { useState } from "react";
+import { FiHeart } from "react-icons/fi";
+import { BsHeartFill } from "react-icons/bs";
+
+import { Chicle } from "next/font/google";
+const chicle = Chicle({ subsets: ["latin"], weight: "400" });
+
+const colorPalette = [
+  "#e11d48",
+  "#db2777",
+  "#9333ea",
+  "#2563eb",
+  "#059669",
+  "#d97706",
+  "#f43f5e",
+  "#10b981",
+];
+
+const getColorFromId = (id) => {
+  let ID = parseInt(id);
+  if (typeof ID !== "number" || isNaN(ID) || ID < 0) return "#6b7280"; // gray fallback
+  // Simple hash to get better spread even with sequential IDs
+  const hashed = (ID * 2654435761) >>> 0; // Knuth multiplicative hash
+  const index = hashed % colorPalette.length;
+  return colorPalette[index];
+};
 
 const Post = ({ id, time, content, likeCount }) => {
   const [liked, setLiked] = useState(false);
   const [likes, setLikes] = useState(likeCount);
+  const anonColor = getColorFromId(id);
 
   const toggleLike = () => {
     setLiked(!liked);
@@ -15,28 +37,29 @@ const Post = ({ id, time, content, likeCount }) => {
   };
 
   return (
-    <div className="border-2 border-rose-800 max-w-full rounded-xs shadow-md">
-      <div className="pr-2 pl-2 p-1 text-xl text-rose-800 w-full border-b-2 border-b-rose-800 flex justify-between">
-        <div className="flex">
-          <div>Anonymous User</div>
-          <div className="text-xs p-2 text-red-700">{time}</div>
+    <div className="text-sm border-2 border-rose-600 rounded-xs p-2">
+      <div className="flex items-center space-x-4 w-full">
+        {/* Left: Anonymous + Time */}
+        <div className="min-w-max">
+          <div
+            style={{ color: anonColor, fontWeight: "bold" }}
+            className={`text-left text-xl ${chicle.className}`}
+          >
+            Anonymous
+          </div>
+          <div className="text-gray-500 text-left text-xs">{time}</div>
         </div>
-        <div className="flex ">
-          <button onClick={toggleLike}>
-            {liked ? (
-              <BsHeartFill className="text-pink-600 p-1" size={28} />
-            ) : (
-              <FiHeart className="text-rose-700 p-1" size={28} />
-            )}
+
+        {/* Middle: Content (stretches) */}
+        <div className="flex-1 text-left text-lg">{content}</div>
+
+        {/* Right: Like Button */}
+        <div className="flex items-center text-gray-500">
+          <button onClick={toggleLike} className="pr-1">
+            {liked ? <BsHeartFill size={12} /> : <FiHeart size={12} />}
           </button>
           <div>{likes}</div>
         </div>
-      </div>
-      <div
-        className="p-4 flex justify-betwee text-rose-900 text-2xl font-stretch-95%%
-      "
-      >
-        {content}
       </div>
     </div>
   );
