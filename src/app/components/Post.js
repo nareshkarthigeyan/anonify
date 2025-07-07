@@ -48,25 +48,25 @@ const Post = ({ id, time, content, likeCount }) => {
 
   return (
     <div className="text-sm shadow-2xs border border-rose-600 rounded-md p-2 bg-rose-50">
-      <div className="flex items-center space-x-4 w-full align-top">
+      <div className="flex flex-col space-x-4 w-full align-top">
         {/* Left: Anonymous + Time */}
-        <div className="flex flex-col justify-start min-w-max align-text-top">
+        <div className="flex justify-start min-w-max align-text-bottom pb">
           <div
             style={{ color: anonColor, fontWeight: "bold" }}
             className={`text-left text-md mr-2`}
           >
             Anonymous
           </div>
-          <div className="text-gray-500 text-left text-xs">{time}</div>
+          <div className="text-gray-500 text-left text-xs ">{time}</div>
         </div>
 
         {/* Middle: Content (stretches) */}
         <div className="flex-1 text-left text-zinc-800 text-lg">{content}</div>
 
         {/* Right: Like Button */}
-        <div className="flex items-center text-gray-500">
+        <div className="flex items-center text-rose-500 pt-1">
           <button onClick={toggleLike} className="pr-1">
-            {liked ? <BsHeartFill size={12} /> : <FiHeart size={12} />}
+            {liked ? <BsHeartFill size={15} /> : <FiHeart size={15} />}
           </button>
           <div className="pr-2">{likes}</div>
         </div>
