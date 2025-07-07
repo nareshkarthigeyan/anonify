@@ -31,9 +31,19 @@ const Post = ({ id, time, content, likeCount }) => {
   const [likes, setLikes] = useState(likeCount);
   const anonColor = getColorFromId(id);
 
-  const toggleLike = () => {
-    setLiked(!liked);
-    setLikes((prev) => prev + (liked ? -1 : 1));
+  const toggleLike = async () => {
+    const newLiked = !liked;
+    setLiked(newLiked);
+    setLikes((prev) => prev + (newLiked ? 1 : -1));
+
+    const { error } = await supabase
+      .from("posts")
+      .update({ likes: newLiked ? likes + 1 : likes - 1 })
+      .eq("id", id);
+
+    if (error) {
+      console.error("Error updating like count:", error.message);
+    }
   };
 
   return (
