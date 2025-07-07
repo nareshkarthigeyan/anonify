@@ -7,9 +7,16 @@ export default function HomePage() {
   const [refreshKey, setRefreshKey] = useState(0);
 
   return (
-    <>
-      <Navbar onPostSubmit={() => setRefreshKey((prev) => prev + 1)} />
-      <Feed refreshTrigger={refreshKey} />
-    </>
+    <div className="bg-rose-100">
+      <div className="min-w-full fixed ">
+        <Navbar onPostSubmit={() => setRefreshKey((prev) => prev + 1)} />
+      </div>
+      <div
+        style={{ paddingTop: "calc(var(--spacing) * 21)" }}
+        className="bg-rose-100"
+      >
+        <Feed refreshTrigger={refreshKey} />
+      </div>
+    </div>
   );
 }

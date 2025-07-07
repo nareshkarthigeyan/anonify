@@ -40,8 +40,8 @@ const Feed = ({ refreshTrigger }) => {
       const { data, error } = await supabase
         .from("posts")
         .select("*")
-        .order("created_at", { ascending: false })
-        .limit(10);
+        .order("created_at", { ascending: false });
+      // .limit(10);
 
       if (error) {
         console.error("Error fetching posts:", error);

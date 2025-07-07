@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { FiHeart } from "react-icons/fi";
 import { BsHeartFill } from "react-icons/bs";
-
+import { supabase } from "../../../lib/supabaseClient";
 import { Chicle } from "next/font/google";
 const chicle = Chicle({ subsets: ["latin"], weight: "400" });
 
@@ -47,13 +47,13 @@ const Post = ({ id, time, content, likeCount }) => {
   };
 
   return (
-    <div className="text-sm border-2 border-rose-600 rounded-xs p-2">
+    <div className="text-sm shadow-2xs border border-rose-600 rounded-md p-2 bg-rose-50">
       <div className="flex items-center space-x-4 w-full">
         {/* Left: Anonymous + Time */}
         <div className="min-w-max">
           <div
             style={{ color: anonColor, fontWeight: "bold" }}
-            className={`text-left text-xl ${chicle.className}`}
+            className={`text-left text-md mr-2`}
           >
             Anonymous
           </div>
@@ -61,14 +61,14 @@ const Post = ({ id, time, content, likeCount }) => {
         </div>
 
         {/* Middle: Content (stretches) */}
-        <div className="flex-1 text-left text-lg">{content}</div>
+        <div className="flex-1 text-left text-zinc-800 text-lg">{content}</div>
 
         {/* Right: Like Button */}
         <div className="flex items-center text-gray-500">
           <button onClick={toggleLike} className="pr-1">
             {liked ? <BsHeartFill size={12} /> : <FiHeart size={12} />}
           </button>
-          <div>{likes}</div>
+          <div className="pr-2">{likes}</div>
         </div>
       </div>
     </div>

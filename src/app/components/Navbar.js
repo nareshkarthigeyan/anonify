@@ -43,7 +43,7 @@ const Navbar = ({ onPostSubmit }) => {
   };
 
   return (
-    <div className="p-4 w-full justify-between items-center p-4 bg-white flex border-b-2 border-b-red-700">
+    <div className="p-4 w-full justify-between items-center p-4 bg-rose-200 flex border-b-2 border-b-red-700">
       <Link
         className={`${chicle.className} text-5xl text-rose-600 mr-1`}
         href="/"
@@ -52,7 +52,7 @@ const Navbar = ({ onPostSubmit }) => {
       </Link>
       <br />
       <button
-        className="bg-rose-500 pr-8 pl-8 pt-3 pb-3 text-amber-50"
+        className="bg-rose-500 pr-8 pl-8 pt-3 pb-3 rounded-md text-amber-50"
         onClick={handleClick}
       >
         POST
@@ -77,13 +77,13 @@ const Navbar = ({ onPostSubmit }) => {
             <div className="flex justify-end gap-2">
               <button
                 onClick={handleClose}
-                className={`bg-gray-500 pr-6 pl-6 pt-3 pb-3 ${chicle.className} text-2xl font-bold pb-2 text-white`}
+                className={`bg-gray-500 pr-6 pl-6 pt-3 pb-3 text-xl font-bold rounded-md text-white`}
               >
                 Cancel
               </button>
               <button
                 onClick={handleSubmit}
-                className={`bg-rose-600 pr-6 pl-6 pt-3 pb-3 ${chicle.className} text-2xl font-bold text-rose-700 pb-2 text-white`}
+                className={`bg-rose-600 pr-6 pl-6 pt-3 pb-3 text-xl font-bold rounded-md text-white`}
               >
                 Post
               </button>
