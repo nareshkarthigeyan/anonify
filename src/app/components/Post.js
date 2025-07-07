@@ -48,9 +48,9 @@ const Post = ({ id, time, content, likeCount }) => {
 
   return (
     <div className="text-sm shadow-2xs border border-rose-600 rounded-md p-2 bg-rose-50">
-      <div className="flex items-center space-x-4 w-full">
+      <div className="flex items-center space-x-4 w-full align-top">
         {/* Left: Anonymous + Time */}
-        <div className="min-w-max">
+        <div className="flex flex-col justify-start min-w-max align-text-top">
           <div
             style={{ color: anonColor, fontWeight: "bold" }}
             className={`text-left text-md mr-2`}
