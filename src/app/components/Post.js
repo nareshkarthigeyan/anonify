@@ -4,45 +4,55 @@ import { FiHeart } from "react-icons/fi";
 import { BsHeartFill } from "react-icons/bs";
 import { supabase } from "../../../lib/supabaseClient";
 import { Chicle } from "next/font/google";
+import { useEffect } from "react";
 const chicle = Chicle({ subsets: ["latin"], weight: "400" });
 
-const colorPalette = [
-  "#e11d48",
-  "#db2777",
-  "#9333ea",
-  "#2563eb",
-  "#059669",
-  "#d97706",
-  "#f43f5e",
-  "#10b981",
-];
-
-const getColorFromId = (id) => {
-  let ID = parseInt(id);
-  if (typeof ID !== "number" || isNaN(ID) || ID < 0) return "#6b7280"; // gray fallback
-  // Simple hash to get better spread even with sequential IDs
-  const hashed = (ID * 2654435761) >>> 0; // Knuth multiplicative hash
-  const index = hashed % colorPalette.length;
-  return colorPalette[index];
-};
-
-const Post = ({ id, time, content, likeCount }) => {
+const Post = ({ id, time, content, likeCount, username, color }) => {
   const [liked, setLiked] = useState(false);
   const [likes, setLikes] = useState(likeCount);
-  const anonColor = getColorFromId(id);
+  // Fetch logged-in user
+  useEffect(() => {
+    const fetchUser = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (user) {
+        // Check if user already liked this post
+        const { data, error } = await supabase
+          .from("likes")
+          .select("*")
+          .eq("post_id", id)
+          .eq("user_id", user.id);
+
+        if (data?.length > 0) {
+          setLiked(true);
+        }
+      }
+    };
+    fetchUser();
+  }, [id]);
 
   const toggleLike = async () => {
+    if (!userId) return;
+
     const newLiked = !liked;
     setLiked(newLiked);
     setLikes((prev) => prev + (newLiked ? 1 : -1));
 
-    const { error } = await supabase
-      .from("posts")
-      .update({ likes: newLiked ? likes + 1 : likes - 1 })
-      .eq("id", id);
-
-    if (error) {
-      console.error("Error updating like count:", error.message);
+    if (newLiked) {
+      const { error } = await supabase.from("likes").insert({
+        user_id: userId,
+        post_id: id,
+      });
+      if (error) console.error("Error liking post:", error.message);
+    } else {
+      // Remove from likes table
+      const { error } = await supabase
+        .from("likes")
+        .delete()
+        .eq("user_id", userId)
+        .eq("post_id", id);
+      if (error) console.error("Error unliking post:", error.message);
     }
   };
 
@@ -51,11 +61,8 @@ const Post = ({ id, time, content, likeCount }) => {
       <div className="flex flex-col space-x-4 w-full align-top">
         {/* Left: Anonymous + Time */}
         <div className="flex items-end gap-2 min-w-max pl-1 pb-1">
-          <div
-            style={{ color: anonColor, fontWeight: "bold" }}
-            className="text-lg"
-          >
-            Anonymous
+          <div style={{ color: color, fontWeight: "bold" }} className="text-lg">
+            {username}
           </div>
           <div className="text-gray-500 text-xs pb-1">{time}</div>
         </div>

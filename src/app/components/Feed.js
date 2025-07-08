@@ -39,12 +39,23 @@ const Feed = ({ refreshTrigger }) => {
       setLoading(true);
       const { data, error } = await supabase
         .from("posts")
-        .select("*")
+        .select(
+          `
+          id,
+          content,
+          created_at,
+          likes,
+          user_id,
+          profiles (
+            username,
+            color
+          )
+        `
+        )
         .order("created_at", { ascending: false });
-      // .limit(10);
 
       if (error) {
-        console.error("Error fetching posts:", error);
+        console.error("Error fetching posts:", error.message);
       } else {
         setPosts(data);
       }
@@ -67,6 +78,8 @@ const Feed = ({ refreshTrigger }) => {
             content={post.content}
             time={formatRelativeTime(post.created_at)}
             likeCount={post.likes}
+            username={post.profiles?.username || "anonymous"}
+            color={post.profiles?.color || "#ffffffff"}
           />
         ))}
       </div>
