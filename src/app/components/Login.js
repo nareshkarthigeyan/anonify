@@ -167,7 +167,7 @@ export default function AuthPage() {
 
   return (
     <div className="flex justify-center items-center h-screen bg-rose-100">
-      <div className="w-full max-w-sm bg-white-200 border-2 border-rose-300 shadow-2xl  hover:cursor-pointer p-8 rounded shadow-rose-300 hover:shadow-rose-300">
+      <div className="w-full max-w-sm bg-white-200 border-2 border-rose-300  hover:cursor-pointer p-8 rounded shadow-rose-300 hover:shadow-2xl hover:shadow-rose-300">
         <h1
           className={`text-5xl text-rose-500 font-bold mb-6 text-center ${chicle.className}`}
         >
@@ -206,10 +206,10 @@ export default function AuthPage() {
                   <button
                     type="button"
                     onClick={() => setUsername(generateRandomUsername())}
-                    className="text-sm pr-3 pl-3 hover:cursor-pointer hover:bg-rose-200 rounded-md"
+                    className="text-sm pr-1 pl-1 hover:cursor-pointer"
                     title="Suggest a username"
                   >
-                    🎲
+                    ?
                   </button>
                 </div>
               </div>
