@@ -38,7 +38,7 @@ const Navbar = ({ onPostSubmit }) => {
 
     const { error } = await supabase.from("posts").insert([
       {
-        content: "This is a new post!",
+        content: content,
         user_id: user.id,
         parent_id: null,
       },
