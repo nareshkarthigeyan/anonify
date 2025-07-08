@@ -77,12 +77,12 @@ const Navbar = ({ onPostSubmit }) => {
         >
           POST
         </button>
-        <button
+        {/* <button
           className="bg-gray-500 pr-8 pl-8 pt-3 pb-3 rounded-md text-amber-50 mr-4"
           onClick={handleLogout}
         >
           Logout
-        </button>
+        </button> */}
       </div>
 
       {showForm && (
