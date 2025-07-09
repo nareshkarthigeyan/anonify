@@ -47,6 +47,7 @@ const Feed = ({ refreshTrigger }) => {
           likes,
           user_id,
           profiles (
+            id,
             username,
             color
           )
@@ -79,6 +80,7 @@ const Feed = ({ refreshTrigger }) => {
             time={formatRelativeTime(post.created_at)}
             likeCount={post.likes}
             username={post.profiles?.username || "anonymous"}
+            posterId={post.profiles?.id}
             color={post.profiles?.color || "#ffffffff"}
           />
         ))}

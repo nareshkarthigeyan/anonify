@@ -7,7 +7,7 @@ import { Chicle } from "next/font/google";
 
 const chicle = Chicle({ subsets: ["latin"], weight: "400" });
 
-const Post = ({ id, time, content, likeCount, username, color }) => {
+const Post = ({ id, time, content, likeCount, username, posterId, color }) => {
   const [liked, setLiked] = useState(false);
   const [likes, setLikes] = useState(likeCount);
   const [userId, setUserId] = useState(null);
@@ -105,7 +105,7 @@ const Post = ({ id, time, content, likeCount, username, color }) => {
         {/* Left: Anonymous + Time */}
         <div className="flex items-end gap-2 min-w-max pl-1 pb-1">
           <div style={{ color: color, fontWeight: "bold" }} className="text-lg">
-            {username}
+            <a href={`/user/${posterId}`}>{username}</a>
           </div>
           <div className="text-gray-500 text-xs pb-1">{time}</div>
         </div>
